@@ -10,6 +10,8 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nome
 
+from django.conf import settings  
+
 class Produto(models.Model):
     data = models.DateTimeField(auto_now_add=True)
     nome = models.CharField(max_length=200)
@@ -18,19 +20,17 @@ class Produto(models.Model):
     observacao = models.TextField(null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
     visao_geral = models.TextField(null=True, blank=True)
-    video = models.FileField(upload_to='videos/', null=True, blank=True)
-    imagem_Carrossel1 = models.ImageField(upload_to='produtos/', null=True, blank=True)
-    imagem_Carrossel2 = models.ImageField(upload_to='produtos/', null=True, blank=True)
-    imagem_Carrossel3 = models.ImageField(upload_to='produtos/', null=True, blank=True)
     imagemProd = models.ImageField(upload_to='produtos/', null=True, blank=True)
-    
 
+    # 🔥 Este campo é essencial para saber de qual empresa é o produto
+    created_by = models.ForeignKey('Empresa', on_delete=models.CASCADE, null=True, blank=True)
 
-    class Meta():
+    class Meta:
         verbose_name_plural = "Produtos"
 
     def __str__(self):
         return self.descricao
+
     
 class Cad_Cliente(models.Model):
     data = models.DateField(auto_now_add=True)
@@ -92,3 +92,12 @@ class Empresa(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Avaliacao(models.Model):
+    empresa = models.ForeignKey('Empresa', on_delete=models.CASCADE, related_name='avaliacoes')
+    nota = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
+    comentario = models.TextField(blank=True)
+    data = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Avaliação {self.nota} para {self.empresa.nome}"

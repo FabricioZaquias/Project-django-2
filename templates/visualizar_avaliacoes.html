@@ -1,0 +1,32 @@
+{% include 'header-admin.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'assets/css/index_admin.css' %}">
+<div class="col-md-10">
+  <div class="content-box-large">
+    <div class="panel-heading">
+      <div class="panel-title"><h3>Avaliações Recebidas</h3></div>
+    </div>
+    <div class="panel-body">
+    <div class="avaliacoes-grid">
+  {% for avaliacao in avaliacoes %}
+    <div class="avaliacao">
+      <strong>Avaliação:</strong>
+      <span class="star-display">
+        {% for i in "12345" %}
+          {% with forloop.counter as star %}
+            {% if star <= avaliacao.nota %}
+              ★
+            {% else %}
+              ☆
+            {% endif %}
+          {% endwith %}
+        {% endfor %}
+      </span><br />
+      <strong>Comentário:</strong> {{ avaliacao.comentario|default:"(Sem comentário)" }}<br />
+      <small><em>{{ avaliacao.data|date:"d/m/Y H:i" }}</em></small>
+    </div>
+  {% endfor %}
+</div>
+
+  </div>
+</div>

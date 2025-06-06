@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+<h2>Produtos da empresa: {{ empresa.nome }}</h2>
+
+<ul class="product-list">
+  {% for produto in produtos %}
+    <li class="product-item">
+      {% if produto.imagemProd %}
+  <img src="{{ produto.imagemProd.url }}" alt="{{ produto.nome }}">
+{% else %}
+  <img src="https://via.placeholder.com/100" alt="Sem imagem">
+{% endif %}
+
+      <strong>{{ produto.nome }}</strong><br>
+      {{ produto.descricao }}<br>
+      R$ {{ produto.valor }}
+    </li>
+  {% empty %}
+    <p>Esta empresa ainda não cadastrou produtos.</p>
+  {% endfor %}
+</ul>

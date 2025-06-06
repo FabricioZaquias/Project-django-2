@@ -108,25 +108,36 @@ from .forms import ProdutoForm
 
 from .models import Categoria
 
+from .models import Empresa
+
 def CADASTRO_PROD(request):
     if request.method == 'POST':
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
             nova_categoria_nome = form.cleaned_data.get('nova_categoria')
+
+            # Recupera a empresa logada pela sessão
+            empresa_id = request.session.get('empresa_id')
+            if not empresa_id:
+                return redirect('LOGIN_ADMIN_URL')
+            empresa = get_object_or_404(Empresa, id=empresa_id)
+
+            produto = form.save(commit=False)
+
             if nova_categoria_nome:
                 categoria, created = Categoria.objects.get_or_create(nome=nova_categoria_nome)
-                produto = form.save(commit=False)
                 produto.categoria = categoria
-                produto.save()
-            else:
-                form.save()
+
+            produto.created_by = empresa
+            produto.save()
             return redirect('LISTAGEM-PROD_URL')
     else:
         form = ProdutoForm()
-        return render(request, 'cadastro_prod.html', {'form': form})
+
+    return render(request, 'cadastro_prod.html', {'form': form})
 
 
-@login_required
+
 def editar_produto(request, id):
     produto = get_object_or_404(Produto, id=id)
     if request.method == 'POST':
@@ -138,7 +149,6 @@ def editar_produto(request, id):
         form = ProdutoForm(instance=produto)
     return render(request, 'editar_produto.html', {'form': form})
 
-@login_required
 def excluir_produto(request, id):
     produto = get_object_or_404(Produto, id=id)
     if request.method == 'POST':
@@ -155,7 +165,7 @@ def listar_categorias(request):
 from django.shortcuts import get_object_or_404, redirect
 from .forms import CategoriaForm
 
-@login_required
+
 def editar_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     if request.method == 'POST':
@@ -167,7 +177,7 @@ def editar_categoria(request, id):
         form = CategoriaForm(instance=categoria)
     return render(request, 'editar_categoria.html', {'form': form})
 
-@login_required
+
 def excluir_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     categoria.delete()
@@ -219,3 +229,45 @@ def editar_empresa(request):
         form = EmpresaForm(instance=empresa)
 
     return render(request, 'editar_empresa.html', {'form': form})
+
+def listar_empresas(request):
+    empresas = Empresa.objects.all()
+    return render(request, 'index.html', {'empresas': empresas})
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import AvaliacaoForm
+
+def avaliar_empresa(request, empresa_id):
+    empresa = get_object_or_404(Empresa, id=empresa_id)
+
+    if request.method == 'POST':
+        form = AvaliacaoForm(request.POST)
+        if form.is_valid():
+            avaliacao = form.save(commit=False)
+            avaliacao.empresa = empresa
+            avaliacao.save()
+            messages.success(request, 'Avaliado com sucesso!')
+            return redirect('avaliar_empresa', empresa_id=empresa.id)
+    else:
+        form = AvaliacaoForm()
+
+    return render(request, 'avaliar_empresa.html', {'form': form, 'empresa': empresa})
+from .models import Avaliacao
+
+def visualizar_avaliacoes(request):
+    empresa_id = request.session.get('empresa_id')
+    if not empresa_id:
+        return redirect('LOGIN_ADMIN_URL')
+
+    empresa = get_object_or_404(Empresa, id=empresa_id)
+    avaliacoes = Avaliacao.objects.filter(empresa=empresa).order_by('-data')
+
+    return render(request, 'visualizar_avaliacoes.html', {
+        'empresa': empresa,
+        'avaliacoes': avaliacoes
+    })
+
+def produtos_por_empresa(request, empresa_id):
+    empresa = get_object_or_404(Empresa, id=empresa_id)
+    produtos = Produto.objects.filter(created_by=empresa)
+    return render(request, 'produtos_por_empresa.html', {'empresa': empresa, 'produtos': produtos})

@@ -1,76 +1,29 @@
 {% include 'header.html' %}
 {% load static %}
 
-    <div>
-        <h2 class="tituloEmpresas">Lista de Empresas Registradas</h2>
-        <ul class="company-list">
+<div>
+    <h2 class="tituloEmpresas">Lista de Empresas Registradas</h2>
+    <ul class="company-list">
+        {% for empresa in empresas %}
             <li class="company-item" style="cursor: pointer;">
-                <img src="https://via.placeholder.com/50" alt="Empresa 1" class="company-image">
+                {% if empresa.imagem %}
+                    <img src="{{ empresa.imagem.url}}" alt="{{ empresa.nome}}" class="company-image">
+                {% else %}
+                    <img src="https://via.placeholder.com/50" alt="{{ empresa.nome}}" class="company-image">
+                {% endif %}
                 <div class="company-details">
-                    <h3>Empresa 1</h3>
-                    <h4>Tipo de Empresa 1</h4>
+                    <h3>{{ empresa.nome }}</h3>
+                    <h4>{{ empresa.tipo_empresa }}</h4>
+                    <a href="{% url 'PRODUTOS_EMPRESA_URL' empresa.id %}">
+    <button>Ver Produtos</button>
+</a>
                 </div>
+                      <a href="{% url 'avaliar_empresa' empresa.id %}">
+    <button>Avaliar</button>
+</a>
             </li>
-            <li class="company-item" style="cursor: pointer;">
-                <img src="https://via.placeholder.com/50" alt="Empresa 2" class="company-image">
-                <div class="company-details">
-                    <h3>Empresa 2</h3>
-                    <h4>Tipo de Empresa 2</h4>
-                </div>
-            </li>
-        </ul>
-    </div>
-</body>
-</html>
-
-                
-                <div class="col-md-4">
-        
-                  <h6>
-                     Navegação
-                  </h6>
-                  <p>
-                    <a href="../index.html" class="text-reset">Home</a>
-                  </p>
-                  <p>
-                    <a href="../rotas/contato.html" class="text-reset">Contato</a>
-                  </p>
-                  <p>
-                    <a href="../rotas/produtos.html" class="text-reset">Produtos</a>
-                  </p>
-            
-                </div>
-              
-             
-                <div class="col-md-4">
-        
-                  <h6 >Contatos</h6>
-                  <p>Rua Lopes trovão, Benfica, RJ</p>
-                  <p>
-                    andrezaoliveira20199@gmail.com
-                  </p>
-                  <a href="https://www.facebook.com/" class="me-4 text-reset">
-                    <img class="icones" src="{% static 'assets/icons/facebook.png' %}" alt="">
-                  </a>
-                  <a href="https://www.linkedin.com/in/andreza-oliveira-737a23233/" class="me-4 text-reset">
-                    <img class="icones" src="{% static 'assets/icons/linkedin.png' %}" alt="">
-                  </a>
-                <a href="https://github.com/andreza02111" class="me-4 text-reset">
-                  <img class="icones" src="{% static 'assets/icons/github.png' %}" alt="">
-                </a>
-                </div>
-           
-              </div>
-         
-            </div>
-            <div class="copy">
-            © 2023 Copyright: Andreza Oliveira
-          </div>
-          </section>
-        
-        
-          
-        
-        </footer>
-  </body>
-</html>
+        {% empty %}
+            <li>Nenhuma empresa cadastrada.</li>
+        {% endfor %}
+    </ul>
+</div>

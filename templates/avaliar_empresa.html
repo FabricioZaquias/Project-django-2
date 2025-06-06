@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Avaliação da Empresa</title>
+
+</head>
+<body>
+    <div class="login-container">
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+        <h2>Avaliação da Empresa</h2>
+        <strong>Nome:</strong> {{ empresa.nome }}
+        <form method="post">
+            {% csrf_token %}
+<div class="star-rating-wrapper">
+    <div class="star-rating">
+        {% for i in "54321" %}
+            <input type="radio" id="star{{ i }}" name="nota" value="{{ i }}">
+            <label for="star{{ i }}">★</label>
+        {% endfor %}
+    </div>
+</div>
+
+
+            <div>
+                {{ form.comentario }}
+            </div>
+            <br />
+            <button type="submit">Enviar Avaliação</button>
+            <a href="{% url 'BASE_URL' %}"><button type="button">Voltar</button></a>
+        </form>
+    </div>
+</body>
+</html>

@@ -31,7 +31,7 @@
               <td>{{ produto.valor }}</td>
               <td>{{ produto.observacao }}</td>
               <td>{{ produto.categoria }}</td>
-        <td><img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" width="100"></td>
+        <td><img class="produto-img" src="{{ produto.imagemProd.url }}" alt="{{ produto.nome }}" ></td>
         <td>
   <a href="{% url 'EDITAR_PRODUTO_URL' produto.id %}" class="btn btn-sm btn-warning">Editar</a>
   <a href="{% url 'EXCLUIR_PRODUTO_URL' produto.id %}" class="btn btn-sm btn-warning" onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>

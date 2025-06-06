@@ -8,10 +8,11 @@ from .views import editar_categoria, excluir_categoria
 
 from .views import listar_categorias
 from .views import editar_produto, excluir_produto
+from .views import listar_empresas # já está importado, só confirmando
 
 
 urlpatterns = [
-    path('', views.BASE, name='BASE_URL'),
+    path('', listar_empresas, name='BASE_URL'),
     path('contato/', views.contato, name='CONTATO_URL'),
     path('console/', views.CONSOLE, name='CONSOLE_URL'),
     path('games-ps4/', views.GAMES, name = 'GAMES_URL'),
@@ -29,10 +30,12 @@ urlpatterns = [
     path('categorias/excluir/<int:id>/', excluir_categoria, name='EXCLUIR_CATEGORIA_URL'),
     path('cadastro-empresa/', views.cadastro_empresa, name='CADASTRO_URL'),
     path('meus-dados/', views.meus_dados_empresa, name='EMPRESA_DADOS_URL'),
-    path('empresa/editar/', views.editar_empresa, name='editar_empresa')
+    path('empresa/editar/', views.editar_empresa, name='editar_empresa'),
+    path('empresa/<int:empresa_id>/avaliar/', views.avaliar_empresa, name='avaliar_empresa'),
+    path('avaliacoes/', views.visualizar_avaliacoes, name='AVALIACOES_EMPRESA_URL'),
+    path('empresa/<int:empresa_id>/produtos/', views.produtos_por_empresa, name='PRODUTOS_EMPRESA_URL')
 
 
-    
 ]
 
 

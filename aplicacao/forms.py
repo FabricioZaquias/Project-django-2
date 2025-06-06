@@ -3,13 +3,17 @@ from .models import Produto
 from .models import Form_Contato
 
 class ProdutoForm(forms.ModelForm):
-    imagem = forms.ImageField(label='Imagem', required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
+    imagemProd = forms.ImageField(
+        label='Imagem',
+        required=False,
+        widget=forms.FileInput(attrs={'class': 'form-control'})
+    )
     nova_categoria = forms.CharField(required=False, label="Nova Categoria")
+
     class Meta:
         model = Produto
-        fields = ('nome', 'descricao', 'valor', 'observacao', 'categoria', 'imagem')
+        fields = ('nome', 'descricao', 'valor', 'observacao', 'categoria', 'imagemProd')
         widgets = {
-            'data': forms.DateInput(attrs={'type': 'date'}),
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),
             'valor': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -75,4 +79,15 @@ class EmpresaForm(forms.ModelForm):
             'socio_cargo': forms.TextInput(attrs={'class': 'form-control'}),
             'socio_telefone': forms.TextInput(attrs={'class': 'form-control'}),
             'socio_email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+from django import forms
+from .models import Avaliacao
+
+class AvaliacaoForm(forms.ModelForm):
+    class Meta:
+        model = Avaliacao
+        fields = ['nota', 'comentario']
+        widgets = {
+            'nota': forms.RadioSelect(choices=[(i, f'{i} estrela{"s" if i > 1 else ""}') for i in range(1, 6)]),
+            'comentario': forms.Textarea(attrs={'rows': 4, 'cols': 50}),
         }

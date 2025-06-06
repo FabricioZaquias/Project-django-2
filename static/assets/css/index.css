@@ -325,4 +325,43 @@ body {
     color: #666;
     font-size: 16px;
   }
-  
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 2rem;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    color: gray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
+}
+.star-rating-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+.messages {
+    list-style: none;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 10px;
+}
