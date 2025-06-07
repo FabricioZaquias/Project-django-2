@@ -156,12 +156,19 @@ def excluir_produto(request, id):
 from .models import Categoria
 from django.contrib.auth.decorators import login_required
 
-def listar_categorias(request):
-    categorias = Categoria.objects.all()
-    return render(request, 'listar_categorias.html', {'categorias': categorias})
-from django.shortcuts import get_object_or_404, redirect
-from .forms import CategoriaForm
+from django.shortcuts import render, get_object_or_404, redirect
 
+def listar_categorias(request):
+    empresa_id = request.session.get('empresa_id')
+    if not empresa_id:
+        return redirect('LOGIN_ADMIN_URL')
+
+    empresa = get_object_or_404(Empresa, id=empresa_id)
+
+    # Filtra categorias que estão associadas a produtos criados pela empresa
+    categorias = Categoria.objects.filter(produto__created_by=empresa).distinct()
+
+    return render(request, 'listar_categorias.html', {'categorias': categorias})
 
 def editar_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
