@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <title>Cadastro Empresa</title>
     <link rel="stylesheet" href="{% static 'assets/css/index.css' %}">
-
 </head>
 <body>
 
 {% include 'header.html' %}
 
-<div class="container" style="max-width: 1000px;">
-
+<div class="cadastro-container" style="max-width: 1000px;">
     <h3>Cadastro Empresa</h3>
 
     {% if messages %}
@@ -39,10 +37,21 @@
             </div>
         {% endfor %}
 
-        <button type="submit" class="btn btn-primary">Registrar</button>
-        <a href="{% url 'ADMIN_URL' %}" class="btn btn-default">Voltar</a>
+        <button type="submit" class="button">Registrar</button>
+        <a class="button" href="{% url 'ADMIN_URL' %}">Voltar</a>
     </form>
 </div>
+
+<!-- Scripts para máscaras -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.cpf-mask').mask('000.000.000-00');
+    $('.cnpj-mask').mask('00.000.000/0000-00');
+    $('.phone-mask').mask('(00) 00000-0000');
+  });
+</script>
 
 </body>
 </html>

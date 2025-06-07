@@ -5,18 +5,14 @@
     <meta charset="UTF-8">
     <title>Contatos - MicroMundo</Title>
         
-        <!-- Bootstrap e jQuery -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
         <!-- CSS personalizado -->
         <link rel="stylesheet" href="{% static 'assets/css/index.css' %}">
 </head>   
 <body>
         {% include 'header.html' %}
-        <div class="col-lg-6 container">
-            <h1 class="h1alinha">Fale Conosco:</h1>
+        <div class="cadastro-container ">
+            <h3>Fale Conosco</h3>
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-success" role="alert">
@@ -25,29 +21,29 @@
                 {% endfor %}
             {% endif %}
             <section>
-                    <div class="elementos-form">
+                    <div class="form-containe">
                         <img src="../icons/falecnosco.png" alt="">
                     </div>
                     <form method="POST" action="{% url 'CONTATO_URL' %}">
                         {% csrf_token %}
-                        <div class="elementos-form">
+                        <div class="input_cadastro">
                             <label for="{{ form.nome_contato.id_for_label }}">Nome:</label>
                             {{ form.nome_contato }}
                         </div>
-                        <div class="elementos-form">
+                        <div class="input_cadastro">
                             <label for="{{ form.email.id_for_label }}">E-mail:</label>
                             {{ form.email }}
                         </div>
-                        <div class="elementos-form">
+                        <div class="input_cadastro">
                             <label for="{{ form.assunto.id_for_label }}">Assunto:</label>
                             {{ form.assunto }}
                         </div>
-                        <div class="elementos-form">
+                        <div class="input_cadastro">
                             <label for="{{ form.mensagem.id_for_label }}">Mensagem:</label>
                             {{ form.mensagem }}
                         </div>
                        
-                        <div class="elementos-form">
+                        <div class="input_cadastro">
                             <label for="{{ form.data.id_for_label }}">Data:</label>
                             {{ form.data }}
                         </div>

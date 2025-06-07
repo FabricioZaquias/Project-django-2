@@ -1,20 +1,21 @@
 {% include 'header.html' %}
-<h2>Produtos da empresa: {{ empresa.nome }}</h2>
-
-<ul class="product-list">
-  {% for produto in produtos %}
-    <li class="product-item">
-      {% if produto.imagemProd %}
-  <img src="{{ produto.imagemProd.url }}" alt="{{ produto.nome }}">
-{% else %}
-  <img src="https://via.placeholder.com/100" alt="Sem imagem">
-{% endif %}
-
-      <strong>{{ produto.nome }}</strong><br>
-      {{ produto.descricao }}<br>
-      R$ {{ produto.valor }}
-    </li>
-  {% empty %}
-    <p>Esta empresa ainda não cadastrou produtos.</p>
-  {% endfor %}
-</ul>
+{% load static %}
+<div class="cadastro-container ">
+  <h3>Produtos da empresa: {{ empresa.nome}}</h3>
+  <ul class="product-list">
+    {% for produto in produtos %}
+      <li class="product-item">
+        <div class="product-name">{{ produto.nome}}</div>
+        {% if produto.imagemProd %}
+          <img src="{{ produto.imagemProd.url }}" alt="{{ produto.nome}}">
+        {% else %}
+          <img src="https://via.placeholder.com/100" alt="Sem imagem">
+        {% endif %}
+        <p class="product-description">{{ produto.descricao}}</p>
+        <p class="product-price">R$ {{ produto.valor }}</p>
+      </li>
+    {% empty %}
+      <p>Esta empresa ainda não cadastrou produtos.</p>
+    {% endfor %}
+  </ul>
+</div>

@@ -14,13 +14,16 @@
                 <div class="company-details">
                     <h3>{{ empresa.nome }}</h3>
                     <h4>{{ empresa.tipo_empresa }}</h4>
-                    <a href="{% url 'PRODUTOS_EMPRESA_URL' empresa.id %}">
-    <button>Ver Produtos</button>
-</a>
+                   <div class="button-group">
+    <a href="{% url 'PRODUTOS_EMPRESA_URL' empresa.id %}">
+        <button>Ver Produtos</button>
+    </a>
+    <a href="{% url 'avaliar_empresa' empresa.id %}">
+        <button>Avaliar</button>
+    </a>
+</div>
+
                 </div>
-                      <a href="{% url 'avaliar_empresa' empresa.id %}">
-    <button>Avaliar</button>
-</a>
             </li>
         {% empty %}
             <li>Nenhuma empresa cadastrada.</li>

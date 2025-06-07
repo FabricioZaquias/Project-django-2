@@ -64,22 +64,23 @@ class EmpresaForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'cnpj': forms.TextInput(attrs={'class': 'form-control'}),
+            'cnpj': forms.TextInput(attrs={'class': 'form-control cnpj-mask'}),
             'inscricao_estadual': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_empresa': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_empresa': forms.TextInput(attrs={'class': 'form-control'}),
             'data_abertura': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'uridica': forms.TextInput(attrs={'class': 'form-control'}),
             'atividade_principal': forms.TextInput(attrs={'class': 'form-control'}),
             'endereco': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefone': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefone': forms.TextInput(attrs={'class': 'form-control phone-mask'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'socio_nome': forms.TextInput(attrs={'class': 'form-control'}),
-            'socio_cpf': forms.TextInput(attrs={'class': 'form-control'}),
+            'socio_cpf': forms.TextInput(attrs={'class': 'form-control cpf-mask'}),
             'socio_data_nascimento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'socio_cargo': forms.TextInput(attrs={'class': 'form-control'}),
-            'socio_telefone': forms.TextInput(attrs={'class': 'form-control'}),
+            'socio_telefone': forms.TextInput(attrs={'class': 'form-control phone-mask'}),
             'socio_email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
+        
 from django import forms
 from .models import Avaliacao
 

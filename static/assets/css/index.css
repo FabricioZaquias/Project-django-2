@@ -155,28 +155,31 @@ body {
       flex-wrap: wrap;
   }
   
-  .company-item {
+
+.company-item {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       margin: 10px;
       border: 1px solid #ccc;
       padding: 10px;
       border-radius: 5px;
       width: 300px;
       box-sizing: border-box;
-  }
-  
+      flex-direction: row;
+}
+
+.company-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
   .company-image {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 20px;
-  }
-  
-  .company-details {
-      display: flex;
-      flex-direction: column;
   }
   
   .company-details h3, .company-details h4 {
@@ -268,13 +271,32 @@ body {
     background-color: #fdfe8d;
   }
   
-  .product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+.product-description {
+  font-size: 14px;
+  margin: 10px 0;
+  color: #555;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #83516e;
+}
+
   .product-item {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -293,11 +315,7 @@ body {
     object-fit: cover;
   }
   
-  .product-item strong {
-    color: #34495e;
-    font-size: 14px;
-  }
-  
+
   .product-item button {
     background-color: #83516e;
     color: white;
@@ -364,4 +382,22 @@ body {
     border: 1px solid #c3e6cb;
     border-radius: 5px;
     padding: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap; /* permite quebrar linha se necessário */
+}
+
+.button-group a {
+    flex: 1;
+    text-align: center;
+}
+
+.button-group button {
+  width: auto !important;
+  flex: 1;
+  padding: 10px 15px;
 }

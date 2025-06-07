@@ -10,7 +10,6 @@ from .models import Produto
 from .forms import ProdutoForm
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 
 def BASE(request):
     return render(request, 'index.html')
@@ -65,7 +64,6 @@ def contato(request):
 
 
 
-#Login do admin ------------------------------------
 from .models import Login_Admin, Empresa
 
 def login_admin(request):
@@ -89,7 +87,6 @@ def login_admin(request):
     return render(request, 'admin_site.html')
 
 
-#logout do admin -----------------------------
 from django.contrib.auth import logout as django_logout
 
 def logout_admin(request):
@@ -116,7 +113,7 @@ def CADASTRO_PROD(request):
         if form.is_valid():
             nova_categoria_nome = form.cleaned_data.get('nova_categoria')
 
-            # Recupera a empresa logada pela sessão
+           
             empresa_id = request.session.get('empresa_id')
             if not empresa_id:
                 return redirect('LOGIN_ADMIN_URL')
@@ -192,13 +189,13 @@ def cadastro_empresa(request):
         if form.is_valid():
             empresa = form.save()
 
-            # Cria o login com os dados da empresa
+      
             Login_Admin.objects.create(
                 usuario=empresa.username,
-                senha=empresa.password  # ⚠️ Idealmente, use hash de senha
+                senha=empresa.password 
             )
 
-            return redirect('LOGIN_ADMIN_URL')  # Redireciona para o login
+            return redirect('LOGIN_ADMIN_URL') 
     else:
         form = EmpresaForm()
     return render(request, 'cadastro_empresa.html', {'form': form})
@@ -224,7 +221,7 @@ def editar_empresa(request):
         form = EmpresaForm(request.POST, request.FILES, instance=empresa)
         if form.is_valid():
             form.save()
-            return redirect('EMPRESA_DADOS_URL')  # Redireciona para a visualização dos dados
+            return redirect('EMPRESA_DADOS_URL')  #
     else:
         form = EmpresaForm(instance=empresa)
 
